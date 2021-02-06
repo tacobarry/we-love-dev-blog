@@ -8,14 +8,8 @@ const schema = new mongoose.Schema({
 const Info = mongoose.model('Info', schema, 'info')
 
 module.exports.getBlogInfo = () => {
-  return new Promise((resolve, reject) => {
-    let _query = {}
-    Info.findOne(_query).populate('authors').lean().exec((err, info) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(info)
-      }
-    })
-  })
+  let _query = {}
+  Info.findOne(_query).populate('authors').lean().exec()
+    .then(info => info)
+    .catch(err => err)
 }

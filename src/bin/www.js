@@ -5,5 +5,6 @@ const env = require('../env')
 const debug = require('../config/debug-config')('http:server')
 
 app.listen(env.port, () => {
-  debug(`Server port: ${env.port}`)
+  // debug(`Server port: ${env.port}`)
+  console.log(`Server url: http://localhost:${env.port}`)
 })

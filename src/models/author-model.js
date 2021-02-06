@@ -12,14 +12,8 @@ const schema = new mongoose.Schema({
 const Author = mongoose.model('Author', schema)
 
 module.exports.getAuthorByPath = (path) => {
-  return new Promise((resolve, reject) => {
-    let _query = { path: path }
-    Author.findOne(_query).lean().exec((err, autor) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(autor)
-      }
-    })
-  })
+  let _query = { path: path }
+  Author.findOne(_query).lean().exec()
+    .then(autor => autor)
+    .catch(err => err)
 }

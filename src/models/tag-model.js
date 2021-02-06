@@ -10,27 +10,15 @@ const schema = new mongoose.Schema({
 const Tag = mongoose.model('Tag', schema)
 
 module.exports.getAllTags = () => {
-  return new Promise((resolve, reject) => {
-    Tag.find({ active: true }).lean().exec((err, tags) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(tags)
-      }
-    })
-  })
+  Tag.find({ active: true }).lean().exec()
+    .then(tags => tags)
+    .catch(err => err)
 }
 
 module.exports.getIdsByPaths = (paths) => {
-  return new Promise((resolve, reject) => {
     let _query = { path: { $in: paths } }
 
-    Tag.find(_query).lean().exec((err, tags) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(tags)
-      }
-    })
-  })
+    Tag.find(_query).lean().exec()
+      .then(tags => tags)
+      .catch(err => err)
 }

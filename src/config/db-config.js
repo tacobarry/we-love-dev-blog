@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const env = require('../env')
 const debug = require('./debug-config')('db')
 
-mongoose.Promise = global.Promise
+// mongoose.Promise = global.Promise
 mongoose.connect(env.db.uri, env.db.options)
 
 const db = mongoose.connection

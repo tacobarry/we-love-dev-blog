@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER Brain Machine Tecnologia LTDA.
+# MAINTAINER Brain Machine Tecnologia LTDA.
 
 ENV NODE_ENV production
 
@@ -8,11 +8,10 @@ RUN yum -y install epel-release; yum clean all
 RUN yum -y install nodejs npm git
 RUN yum clean all
 
-RUN npm install npm -g
 RUN npm install -g n
-RUN n lts
+RUN n v8
 RUN npm install gulp -g 
-RUN npm install pm2@latest -g
+RUN npm install pm2 -g
 
 ADD run.sh /run.sh
 RUN chmod +x /run.sh

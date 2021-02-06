@@ -19,84 +19,59 @@ const Post = mongoose.model('Post', schema)
 const Tag = require('./tag-model')
 
 module.exports.getPostsByName = (search) => {
-  return new Promise((resolve, reject) => {
-    let _query = { active: true }
+  let _query = { active: true }
 
-    if (search) {
-      _query.$or = [
-        { title: new RegExp(search, 'i') },
-        { subtitle: new RegExp(search, 'i') }
-      ]
-    }
+  if (search) {
+    _query.$or = [
+      { title: new RegExp(search, 'i') },
+      { subtitle: new RegExp(search, 'i') }
+    ]
+  }
 
-    Post.find(_query).populate('author').populate('tags').populate('mainTag').lean().exec((err, posts) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(posts)
-      }
-    })
-  })
+  Post.find(_query).populate('author').populate('tags').populate('mainTag').lean().exec()
+    .then(posts => posts)
+    .catch(err => err)
 }
 
 module.exports.getPostsByTags = (tagPaths) => {
-  return new Promise((resolve, reject) => {
-    Tag.getIdsByPaths(tagPaths)
-      .then((tagIds) => {
-        let _query = { active: true }
+  Tag.getIdsByPaths(tagPaths)
+    .then((tagIds) => {
+      let _query = { active: true }
 
-        if (tagIds) {
-          _query.tags = { $in: tagIds }
-        }
+      if (tagIds) {
+        _query.tags = { $in: tagIds }
+      }
 
-        Post.find(_query)
-          .populate('author')
-          .populate('tags')
-          .populate('mainTag')
-          .lean()
-          .exec((err, posts) => {
-            if (err) {
-              reject(err)
-            } else {
-              resolve(posts)
-            }
-          })
-      })
-      .catch(err => {
-        reject(err)
-      })
-  })
+      Post.find(_query)
+        .populate('author')
+        .populate('tags')
+        .populate('mainTag')
+        .lean()
+        .exec()
+        .then(posts)
+        .catch(err)
+    })
+    .then(posts => posts)
+    .catch(err => err)
 }
 
 module.exports.getPostByPath = (path) => {
-  return new Promise((resolve, reject) => {
-    let _query = { active: true, path: path }
+  let _query = { active: true, path: path }
 
-    Post.findOne(_query)
-      .populate('author')
-      .populate('tags')
-      .populate('mainTag')
-      .lean()
-      .exec((err, post) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(post)
-        }
-      })
-  })
+  Post.findOne(_query)
+    .populate('author')
+    .populate('tags')
+    .populate('mainTag')
+    .lean()
+    .exec()
+    .then(posts => posts)
+    .catch(err => err)
 }
 
 module.exports.getPostsByAuthor = (authorId) => {
-  return new Promise((resolve, reject) => {
-    let _query = { active: true, author: authorId }
+  let _query = { active: true, author: authorId }
 
-    Post.find(_query).populate('tags').populate('mainTag').lean().exec((err, posts) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(posts)
-      }
-    })
-  })
+  Post.find(_query).populate('tags').populate('mainTag').lean().exec()
+    .then(posts => posts)
+    .catch(err => err)
 }

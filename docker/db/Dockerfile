@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER Brain Machine Tecnologia LTDA
+# MAINTAINER Brain Machine Tecnologia LTDA
 
 VOLUME /data/db /data/log
 

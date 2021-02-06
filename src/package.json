@@ -1,12 +1,16 @@
 {
   "name": "we-love-dev",
   "version": "1.0.0",
+  "engines": {
+    "node": "<=10.17.0"
+  },
   "description": "blog we love dev",
   "main": "./bin/www",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "npm install && gulp build",
-    "start": "nodemon --debug bin/www"
+    "start": "nodemon --inspect bin/www",
+    "dev": "npm start && open http://localhost:3000"
   },
   "repository": {
     "type": "git",

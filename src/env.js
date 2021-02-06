@@ -5,10 +5,12 @@ var env = {
   port: process.env.PORT || 3000,
   isProduction: true,
   db: {
-    uri: process.env.DB_URI || 'mongodb://dev:dev@ds039860.mlab.com:39860/we-love-dev',
+    uri: process.env.DB_URI || 'mongodb://we-love-dev:we-love-dev@localhost:27017', //'mongodb://dev:dev@ds039860.mlab.com:39860/we-love-dev',
     options: {
-      user: process.env.DB_USER || '',
-      pass: process.env.DB_PASS || ''
+      useMongoClient: true
+      // ,
+      // user: process.env.DB_USER || '',
+      // pass: process.env.DB_PASS || ''
     }
   },
   public: {

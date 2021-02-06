@@ -1,25 +1,37 @@
-we-love-dev-web:
-  build: ./web
-  restart: always
-  links:
-    - we-love-dev-db:db
-  ports:
-    - "80:80"
-  environment:
-    DB_URI: "mongodb://db/${DB_NAME}"
-    DB_USER: "${DB_USER}"
-    DB_PASS: "${DB_PASS}"
+version: "2.0"
 
-we-love-dev-db:
-  build: ./db
-  restart: always
-  ports:
-    - "27017:27017"
-  volumes:
-    - /data/db:/data/db
-  environment:
-    DB_ADMIN_NAME: "${DB_ADMIN_NAME}"
-    DB_ADMIN_PASS: "${DB_ADMIN_PASS}"
-    DB_NAME: "${DB_NAME}"
-    DB_USER: "${DB_USER}"
-    DB_PASS: "${DB_PASS}"
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+
+  we-love-dev-web:
+    build: ./web
+    restart: always
+    links:
+      - we-love-dev-db:db
+    ports:
+      - "80:80"
+    environment:
+      DB_URI: "mongodb://db/${DB_NAME}"
+      DB_USER: "${DB_USER}"
+      DB_PASS: "${DB_PASS}"
+    networks:
+      - app-tier
+
+  we-love-dev-db:
+    build: ./db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - /data/db:/data/db
+    environment:
+      DB_ADMIN_NAME: "${DB_ADMIN_NAME}"
+      DB_ADMIN_PASS: "${DB_ADMIN_PASS}"
+      DB_NAME: "${DB_NAME}"
+      DB_USER: "${DB_USER}"
+      DB_PASS: "${DB_PASS}"
+    networks:
+      - app-tier
